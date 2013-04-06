@@ -1,0 +1,43 @@
+* Btce Module
+
+** API Class
+
+*** BTCE_DOMAIN
+
+*** CURRENCIES
+
+*** CURRENCY_PAIRS
+
+*** MAX_DIGITS
+
+*** Class Methods
+
+**** get_https
+
+**** get_json
+
+** PublicAPI Class
+
+*** OPERATIONS
+
+*** Class Methods
+
+**** get_pair_operation_json(pair, operation)
+
+**** get_pair_fee_json(pair)
+
+**** get_pair_ticker_json(pair)
+
+**** get_pair_trades_json(pair)
+
+**** get_pair_depth_json(pair)
+
+**** get_<PAIR>_fee_json
+
+**** get_<PAIR>_ticker_json
+
+**** get_<PAIR>_trades_json
+
+**** get_<PAIR>_depth_json
+
+** TradeAPI Class

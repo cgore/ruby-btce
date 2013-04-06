@@ -40,8 +40,22 @@ require 'uri'
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
-    CURRENCIES =  %w(btc usd rur ltc nmc eur nvc)
-    CURRENCY_PAIRS = %w(btc_usd btc_rur ltc_btc ltc_usd ltc_rur nmc_btc usd_rur eur_usd nvc_btc)
+    CURRENCIES =  %w(btc
+                     usd
+                     rur
+                     ltc
+                     nmc
+                     eur
+                     nvc)
+    CURRENCY_PAIRS = %w(btc_usd
+                        btc_rur
+                        ltc_btc
+                        ltc_usd
+                        ltc_rur
+                        nmc_btc
+                        usd_rur
+                        eur_usd
+                        nvc_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_rur" => 4,
@@ -76,11 +90,17 @@ module Btce
     OPERATIONS = %w(fee ticker trades depth)
 
     class << self
+
+      def get_pair_operation_json(pair, operation)
+        raise ArgumentError if not API::CURRENCY_PAIRS.include? pair
+        raise ArgumentError if not OPERATIONS.include? operation
+        get_json "https://#{API::BTCE_DOMAIN}/api/2/#{pair}/#{operation}"
+      end
+
       OPERATIONS.each do |operation|
         class_eval %{
           def get_pair_#{operation}_json(pair)
-            raise ArgumentError if not API::CURRENCY_PAIRS.include? pair
-            get_json "https://\#{API::BTCE_DOMAIN}/api/2/\#{pair}/#{operation}"
+            get_pair_operation_json pair, "#{operation}"
           end
         }
 
