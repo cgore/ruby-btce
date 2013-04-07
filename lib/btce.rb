@@ -36,7 +36,17 @@ require 'json'
 require 'net/http'
 require 'net/https'
 require 'uri'
-
+require 'openssl'
+require 'yaml'
+class String
+  def underscore
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
@@ -67,21 +77,32 @@ module Btce
       "eur_usd" => 4, 
       "nvc_btc" => 4
     }
+    API_KEY = YAML::load(File.open('btcapi.yml'))
+    
 
     class << self
-      def get_https(url)
+      def get_https(url,params=nil,sign=nil)
         raise ArgumentError if not url.is_a? String
         uri = URI.parse url
         http = Net::HTTP.new uri.host, uri.port
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        request = Net::HTTP::Get.new uri.request_uri
+        #if sending params then we want a post request(for authentication)
+        if(params==nil)
+          request = Net::HTTP::Get.new uri.request_uri
+        else
+          request = Net::HTTP::Post.new uri.request_uri
+          request.add_field("Key",API::API_KEY['key'])
+          request.add_field("Sign",sign)
+          request.set_form_data(params)
+  
+        end
         response = http.request request
         response.body
       end
 
-      def get_json(url)
-        JSON.load get_https url
+      def get_json(url,params=nil,sign=nil)
+        JSON.load get_https url, params, sign
       end
     end
   end
@@ -116,5 +137,40 @@ module Btce
   end
 
   class TradeAPI < API
+    OPERATIONS = %w(getInfo TransHistory TradeHistory OrderList Trade CancelOrder)
+ 
+    class << self
+      def sign(params)
+        #digest needs to be created
+        hmac = OpenSSL::HMAC.new(API::API_KEY['secret'], OpenSSL::Digest::SHA512.new)
+        params = params.collect{|k,v| "#{k}=#{v}"}.join('&')
+        signed = hmac.update(params) 
+      end
+      
+      def trade_api_call(method, extra)
+        params = {"method"=>method, "nonce"=>nonce}
+        if !extra.empty?
+          
+          extra.each do |a|
+            params["#{a.to_s}"] = a
+          end
+        end
+        puts params
+        signed = sign(params)
+        get_json "https://#{API::BTCE_DOMAIN}/tapi", params, signed
+      end
+      
+      def nonce
+        Time.now.to_i
+      end
+
+      OPERATIONS.each do |operation|
+        class_eval %{
+          def #{operation.underscore}  extra={}
+            trade_api_call "#{operation}", extra
+          end
+        }
+      end
+    end
   end
 end
