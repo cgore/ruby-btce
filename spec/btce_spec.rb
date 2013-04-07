@@ -52,9 +52,11 @@ describe String do
 
   describe :valid_json? do
     it "returns true if it is valid json" do
+      "[1,2,3]".should be_valid_json
     end
 
     it "returns false if it is invalid json" do
+      "blarg".should_not be_valid_json
     end
   end
 end
