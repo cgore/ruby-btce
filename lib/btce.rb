@@ -35,18 +35,20 @@
 require 'json'
 require 'net/http'
 require 'net/https'
-require 'uri'
 require 'openssl'
+require 'uri'
 require 'yaml'
+
 class String
-  def underscore
-    self.gsub(/::/, '/').
-    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-    gsub(/([a-z\d])([A-Z])/,'\1_\2').
-    tr("-", "_").
-    downcase
+  def camelcase_to_snakecase
+    self.gsub(/::/, '/')
+      .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+      .gsub(/([a-z\d])([A-Z])/,'\1_\2')
+      .tr("-", "_")
+      .downcase
   end
 end
+
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
@@ -77,7 +79,7 @@ module Btce
       "eur_usd" => 4, 
       "nvc_btc" => 4
     }
-    API_KEY = YAML::load(File.open('btcapi.yml'))
+    API_KEY = YAML::load(File.open('btce-api-key.yml'))
     
 
     class << self
@@ -166,7 +168,7 @@ module Btce
 
       OPERATIONS.each do |operation|
         class_eval %{
-          def #{operation.underscore}  extra={}
+          def #{operation.camelcase_to_snakecase} extra={}
             trade_api_call "#{operation}", extra
           end
         }
