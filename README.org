@@ -41,3 +41,12 @@
 **** get_<PAIR>_depth_json
 
 ** TradeAPI Class
+
+**** sign(params)
+**** trade_api_call(method, extra)
+**** get_info
+**** trade_history
+**** trans_history
+**** trade
+**** order_list
+**** cancel_order
