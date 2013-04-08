@@ -3,11 +3,16 @@
 Thanks to everyone who has helped out with this project.  If we have forgotten
 to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgore.com]].
 
-+ Edward Funger \\
-  [[https://github.com/teddythetwig][github.com/teddythetwig]] \\
++ Edward Funger
+
+  [[https://github.com/teddythetwig][github.com/teddythetwig]]
+
   [[mailto:teddythetwig@gmail.com][teddythetwig@gmail.com]]
 
-+ Christopher Mark Gore \\
-  [[http://www.cgore.com][cgore.com]] \\
-  [[https://github.com/cgore][github.com/cgore]] \\
++ Christopher Mark Gore
+
+  [[http://www.cgore.com][cgore.com]]
+
+  [[https://github.com/cgore][github.com/cgore]]
+
   [[mailto:cgore@cgore.com][cgore@cgore.com]]
