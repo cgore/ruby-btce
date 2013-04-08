@@ -147,6 +147,48 @@ module Btce
     end
   end
 
+  class PublicOperation
+    attr_reader :json, :operation, :pair
+
+    def initialize(operation, pair)
+      @operation = operation
+      @pair = pair
+      load_json
+    end
+
+    def load_json
+      @json = PublicAPI.get_pair_operation_json pair, operation
+    end
+  end
+
+  class Fee < PublicOperation
+    def initialize(pair)
+      super 'fee', pair
+    end
+
+    def trade
+      json["trade"]
+    end
+  end
+
+  class Ticker < PublicOperation
+    def initialize(pair)
+      super 'ticker', pair
+    end
+  end
+
+  class Trades < PublicOperation
+    def initialize(pair)
+      super 'trades', pair
+    end
+  end
+
+  class Depth < PublicOperation
+    def initialize(pair)
+      super 'depth', pair
+    end
+  end
+
   class TradeAPI < API
     OPERATIONS = %w(getInfo
                     TransHistory

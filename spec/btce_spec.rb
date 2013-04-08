@@ -62,7 +62,7 @@ describe String do
 end
 
 describe API do
-  describe :API_KEY do
+  describe :KEY do
     it "contains the key entry" do
       API::KEY['key'].should be_a String
     end
@@ -79,6 +79,59 @@ end
 
 describe PublicAPI do
   describe :get_pair_operation_json
+end
+
+describe PublicOperation do
+  before :all do
+    @op = PublicOperation.new "ticker", "btc_usd"
+  end
+
+  describe :new do
+    it "sets the operation" do
+      @op.operation
+        .should == "ticker"
+    end
+
+    it "sets the pair" do
+      @op.pair
+        .should == "btc_usd"
+    end
+
+    it "loads the json" do
+      @op.json
+        .should_not be_nil
+    end
+  end
+end
+
+describe Fee do
+  before :all do
+    @fee = Fee.new "btc_usd"
+  end
+
+  describe :new do
+    it "sets the operation to the default 'fee'" do
+      @fee.operation
+        .should == "fee"
+    end
+
+    it "sets the pair" do
+      @fee.pair
+        .should == "btc_usd"
+    end
+
+    it "loads the json" do
+      @fee.json
+        .should_not be_nil
+    end    
+  end
+
+  describe :trade do
+    it "returns the fee for a trade" do
+      @fee.trade
+        .should be_a Float
+    end
+  end
 end
 
 describe TradeAPI do
