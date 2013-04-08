@@ -168,6 +168,41 @@ describe Ticker do
   end
 end
 
+describe Trade do
+  before :all do
+    @trade_hash_example = {
+      "date" => 1365442970,
+      "price" => 168.99,
+      "amount" => 0.393686,
+      "tid" => 1588708,
+      "price_currency" => "USD",
+      "item" => "BTC",
+      "trade_type" => "bid"
+    }
+    @trade = Trade.new_from_json @trade_hash_example
+  end
+
+  describe :new_from_json do
+    it "makes a new Trade instance from the JSON-parsed hash" do
+      @trade.should be_a Trade
+    end
+  end
+
+  Trade::JSON_METHODS.each do |method|
+    class_eval %{
+      describe :#{method} do
+        it "is set to the value from the hash" do
+          @trade.#{method}
+            .should == @trade_hash_example["#{method}"]
+        end
+      end
+    }
+  end
+end
+
+describe Trades do
+end
+
 describe TradeAPI do
   describe :sign
 

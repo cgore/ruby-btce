@@ -187,9 +187,43 @@ module Btce
     end
   end
 
+  class Trade
+    attr_accessor :json
+    
+    JSON_METHODS = %w(date price amount tid price_currency item trade_type)
+
+    attr_accessor *JSON_METHODS.map(&:to_sym)
+
+    class << self
+      def new_from_json(json)
+        result = Trade.new
+        result.json = json
+        if json.is_a? Hash
+          JSON_METHODS.each do |method|
+            instance_eval %{
+              result.#{method} = json["#{method}"]
+            }
+          end
+        end
+        result
+      end
+    end
+  end
+
   class Trades < PublicOperation
+    attr_reader :all
+
     def initialize(pair)
       super 'trades', pair
+      load_trades
+    end
+
+    def load_trades
+      @all = json.map {|trade| Trade.new_from_json trade} if json.is_a? Array
+    end
+
+    def [] *rest
+      all[*rest]
     end
   end
 
