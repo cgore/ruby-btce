@@ -134,6 +134,40 @@ describe Fee do
   end
 end
 
+describe Ticker do
+  before :all do
+    @ticker = Ticker.new "btc_usd"
+  end
+
+  describe :new do
+    it "sets the operation to the default 'ticker'" do
+      @ticker.operation
+        .should == "ticker"
+    end
+
+    it "sets the pair" do
+      @ticker.pair
+        .should == "btc_usd"
+    end
+
+    it "loads the json" do
+      @ticker.json
+        .should_not be_nil
+    end    
+  end
+
+  Ticker::JSON_METHODS.each do |method|
+    class_eval %{
+      describe :trade do
+        it "returns the #{method} for a ticker" do
+          @ticker.#{method}
+            .should_not be_nil
+        end
+      end
+    }
+  end
+end
+
 describe TradeAPI do
   describe :sign
 
