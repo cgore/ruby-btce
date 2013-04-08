@@ -221,6 +221,7 @@ module Btce
     def load_trades
       @all = json.map {|trade| Trade.new_from_json trade} if json.is_a? Array
     end
+    private :load_trades
 
     def [] *rest
       all[*rest]
@@ -266,6 +267,7 @@ module Btce
       def nonce
         Time.now.to_i
       end
+      private :nonce
 
       OPERATIONS.each do |operation|
         class_eval %{
