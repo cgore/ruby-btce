@@ -77,7 +77,7 @@ module Btce
       "eur_usd" => 4, 
       "nvc_btc" => 4
     }
-    API_KEY = YAML::load(File.open('btcapi.yml'))
+    API_KEY = YAML::load(File.open("#{File.dirname(__FILE__)}/../btcapi.yml"))
     
 
     class << self
@@ -100,7 +100,7 @@ module Btce
         response = http.request request
         response.body
       end
-
+  
       def get_json(url,params=nil,sign=nil)
         JSON.load get_https url, params, sign
       end
