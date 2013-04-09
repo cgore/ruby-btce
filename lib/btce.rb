@@ -35,18 +35,27 @@
 require 'json'
 require 'net/http'
 require 'net/https'
-require 'uri'
 require 'openssl'
+require 'uri'
 require 'yaml'
+
 class String
-  def underscore
-    self.gsub(/::/, '/').
-    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-    gsub(/([a-z\d])([A-Z])/,'\1_\2').
-    tr("-", "_").
-    downcase
+  def camelcase_to_snakecase
+    self.gsub(/::/, '/')
+      .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+      .gsub(/([a-z\d])([A-Z])/,'\1_\2')
+      .tr("-", "_")
+      .downcase
+  end
+
+  def valid_json?
+    JSON.parse self
+    return true
+  rescue JSON::ParserError
+    return false
   end
 end
+
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
@@ -77,32 +86,36 @@ module Btce
       "eur_usd" => 4, 
       "nvc_btc" => 4
     }
-    API_KEY = YAML::load(File.open("#{File.dirname(__FILE__)}/../btcapi.yml"))
-    
+
+    KEY = YAML::load File.open 'btce-api-key.yml'    
+
 
     class << self
-      def get_https(url,params=nil,sign=nil)
+      def get_https(url, params = nil, sign = nil)
         raise ArgumentError if not url.is_a? String
         uri = URI.parse url
         http = Net::HTTP.new uri.host, uri.port
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        #if sending params then we want a post request(for authentication)
-        if(params==nil)
+        if params.nil?
           request = Net::HTTP::Get.new uri.request_uri
         else
+          # If sending params, then we want a post request for authentication.
           request = Net::HTTP::Post.new uri.request_uri
-          request.add_field("Key",API::API_KEY['key'])
-          request.add_field("Sign",sign)
-          request.set_form_data(params)
-  
+          request.add_field "Key", API::KEY['key']
+          request.add_field "Sign", sign
+          request.set_form_data params
         end
         response = http.request request
         response.body
       end
-  
-      def get_json(url,params=nil,sign=nil)
-        JSON.load get_https url, params, sign
+
+      def get_json(url, params = nil, sign = nil)
+        result = get_https(url, params, sign)
+        if not result.is_a? String or not result.valid_json?
+          raise RuntimeError, "Server returned invalid data."
+        end
+        JSON.load result
       end
     end
   end
@@ -136,37 +149,131 @@ module Btce
     end
   end
 
+  class PublicOperation
+    attr_reader :json, :operation, :pair
+
+    def initialize(operation, pair)
+      @operation = operation
+      @pair = pair
+      load_json
+    end
+
+    def load_json
+      @json = PublicAPI.get_pair_operation_json pair, operation
+    end
+  end
+
+  class Fee < PublicOperation
+    def initialize(pair)
+      super 'fee', pair
+    end
+
+    def trade
+      json["trade"]
+    end
+  end
+
+  class Ticker < PublicOperation
+    def initialize(pair)
+      super 'ticker', pair
+    end
+
+    JSON_METHODS = %w(high low avg vol vol_cur last buy sell server_time)
+
+    JSON_METHODS.each do |method|
+      class_eval %{
+        def #{method}
+          json["ticker"]["#{method}"] if json["ticker"] and json["ticker"].is_a? Hash
+        end
+      }
+    end
+  end
+
+  class Trade
+    attr_accessor :json
+    
+    JSON_METHODS = %w(date price amount tid price_currency item trade_type)
+
+    attr_accessor *JSON_METHODS.map(&:to_sym)
+
+    class << self
+      def new_from_json(json)
+        result = Trade.new
+        result.json = json
+        if json.is_a? Hash
+          JSON_METHODS.each do |method|
+            instance_eval %{
+              result.#{method} = json["#{method}"]
+            }
+          end
+        end
+        result
+      end
+    end
+  end
+
+  class Trades < PublicOperation
+    attr_reader :all
+
+    def initialize(pair)
+      super 'trades', pair
+      load_trades
+    end
+
+    def load_trades
+      @all = json.map {|trade| Trade.new_from_json trade} if json.is_a? Array
+    end
+    private :load_trades
+
+    def [] *rest
+      all[*rest]
+    end
+  end
+
+  class Depth < PublicOperation
+    def initialize(pair)
+      super 'depth', pair
+    end
+  end
+
   class TradeAPI < API
-    OPERATIONS = %w(getInfo TransHistory TradeHistory OrderList Trade CancelOrder)
+    OPERATIONS = %w(getInfo
+                    TransHistory
+                    TradeHistory
+                    OrderList
+                    Trade
+                    CancelOrder)
  
     class << self
       def sign(params)
-        #digest needs to be created
-        hmac = OpenSSL::HMAC.new(API::API_KEY['secret'], OpenSSL::Digest::SHA512.new)
-        params = params.collect{|k,v| "#{k}=#{v}"}.join('&')
-        signed = hmac.update(params) 
+        # The digest needs to be created.
+        hmac = OpenSSL::HMAC.new(API::KEY['secret'],
+                                 OpenSSL::Digest::SHA512.new)
+        params = params
+          .collect {|k,v| "#{k}=#{v}"}
+          .join('&')
+        signed = hmac.update params
       end
       
       def trade_api_call(method, extra)
-        params = {"method"=>method, "nonce"=>nonce}
-        if !extra.empty?
-          
+        params = {"method" => method, "nonce" => nonce}
+        if ! extra.empty?
           extra.each do |a|
-            params["#{a.to_s}"] = a
+            params[a.to_s] = a
           end
         end
-        puts params
-        signed = sign(params)
+        signed = sign params
         get_json "https://#{API::BTCE_DOMAIN}/tapi", params, signed
       end
       
       def nonce
         Time.now.to_i
       end
+      private :nonce
 
       OPERATIONS.each do |operation|
         class_eval %{
-          def #{operation.underscore}  extra={}
+          def #{operation.camelcase_to_snakecase} extra={}
             trade_api_call "#{operation}", extra
           end
         }
