@@ -37,30 +37,6 @@ require 'spec_helper'
 require 'btce'
 include Btce
 
-describe String do
-  describe :camelcase_to_snakecase do
-    it "correctly handles capitalization at the front" do
-      "Test".camelcase_to_snakecase
-        .should == "test"
-    end
-
-    it "correctly handles capitalization in the middle" do
-      "thisIsATest".camelcase_to_snakecase
-        .should == "this_is_a_test"
-    end
-  end
-
-  describe :valid_json? do
-    it "returns true if it is valid json" do
-      "[1,2,3]".should be_valid_json
-    end
-
-    it "returns false if it is invalid json" do
-      "blarg".should_not be_valid_json
-    end
-  end
-end
-
 describe API do
   describe :KEY do
     it "contains the key entry" do
