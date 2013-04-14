@@ -169,6 +169,10 @@ module Btce
         end
       }
     end
+
+    alias :average :avg
+    alias :volume :vol
+    alias :volume_current :vol_cur
   end
 
   class Trade
