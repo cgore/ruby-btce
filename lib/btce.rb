@@ -244,8 +244,8 @@ module Btce
       def trade_api_call(method, extra)
         params = {"method" => method, "nonce" => nonce}
         if ! extra.empty?
-          extra.each do |a|
-            params[a.to_s] = a
+          extra.each do |k, v|
+            params[k.to_s] = v
           end
         end
         signed = sign params
