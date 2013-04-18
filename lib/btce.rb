@@ -87,7 +87,7 @@ module Btce
       "nvc_btc" => 4
     }
 
-    KEY = YAML::load File.open 'btce-api-key.yml'    
+    KEY = YAML::load File.open './btce-api-key.yml'   
 
 
     class << self
@@ -209,6 +209,8 @@ module Btce
         end
         result
       end
+      
+     
     end
   end
 
@@ -269,6 +271,7 @@ module Btce
       def nonce
         Time.now.to_i
       end
+      #good idea
       private :nonce
 
       OPERATIONS.each do |operation|
