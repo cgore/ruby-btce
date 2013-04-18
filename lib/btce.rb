@@ -33,28 +33,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 require 'json'
+require 'monkey-patch'
 require 'net/http'
 require 'net/https'
 require 'openssl'
 require 'uri'
 require 'yaml'
-
-class String
-  def camelcase_to_snakecase
-    self.gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-      .gsub(/([a-z\d])([A-Z])/,'\1_\2')
-      .tr("-", "_")
-      .downcase
-  end
-
-  def valid_json?
-    JSON.parse self
-    return true
-  rescue JSON::ParserError
-    return false
-  end
-end
 
 module Btce
   class API
@@ -187,6 +171,10 @@ module Btce
         end
       }
     end
+
+    alias :average :avg
+    alias :volume :vol
+    alias :volume_current :vol_cur
   end
 
   class Trade
@@ -260,8 +248,8 @@ module Btce
       def trade_api_call(method, extra)
         params = {"method" => method, "nonce" => nonce}
         if ! extra.empty?
-          extra.each do |a|
-            params[a.to_s] = a
+          extra.each do |k,v|
+            params[k.to_s] = v
           end
         end
         signed = sign params
