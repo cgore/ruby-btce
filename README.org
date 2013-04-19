@@ -1,7 +1,6 @@
 * =Btce= Module
 
 This is a library in Ruby to easily acces the data provided by the [[http://btc-e.com][btc-e.com]] API.
-It is available as a rubygem.
 
 ** Installation
 
@@ -21,6 +20,24 @@ The only thing that 99% of the people using the library will want to do with it:
 require 'btce'
 ticker = Btce::Ticker.new "btc_usd"
 #+END_SRC
+
+This should return something resembling:
+
+#+BEGIN_SRC ruby
+#<Btce::Ticker:0x00000000d5d9a0 @operation="ticker",
+                                @pair="btc_usd",
+                                @json={"ticker"=>{"high"=>127,
+                                                  "low"=>87.301,
+                                                  "avg"=>107.1505,
+                                                  "vol"=>4240695.81634,
+                                                  "vol_cur"=>39298.55663,
+                                                  "last"=>115,
+                                                  "buy"=>115,
+                                                  "sell"=>114.499,
+                                                  "server_time"=>1366406293}}>
+#+END_SRC
+
+You can then acces the fields with the predefined methods of the =Ticker= class.
 
 ** =API= Class
 
