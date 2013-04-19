@@ -2,13 +2,23 @@
 
 ** API Class
 
+This is the parent class for both the =PublicAPI= class and the =TradeAPI= class.
+
 *** BTCE_DOMAIN
+
+This is the domain of the server, defaulting to the string =btc-e.com=.
 
 *** CURRENCIES
 
+This is a list of the short strings for all of the currencies currently supported on [[http://btc-e.com][btc-e.com]].
+
 *** CURRENCY_PAIRS
 
+This is a list of all of the supported currency pairs on [[http://btc-e.com][btc-e.com]].
+
 *** MAX_DIGITS
+
+This indicates how many digits past the decimal place are commonly displayed to humans for a given currency pair.
 
 *** Class Methods
 
