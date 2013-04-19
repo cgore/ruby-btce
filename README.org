@@ -1,6 +1,8 @@
 * =Btce= Module
 
 This is a library in Ruby to easily acces the data provided by the [[http://btc-e.com][btc-e.com]] API.
+It was originally being used on [[http://btc-charts.com][BTC-Charts.com]], among other places.
+It is available under a BSD-style license.
 
 ** Installation
 
