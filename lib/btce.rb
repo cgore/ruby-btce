@@ -51,6 +51,7 @@ module Btce
                      eur
                      nvc)
     CURRENCY_PAIRS = %w(btc_usd
+                        btc_eur
                         btc_rur
                         ltc_btc
                         ltc_usd
@@ -61,6 +62,7 @@ module Btce
                         nvc_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
+      "btc_eur" => 3,
       "btc_rur" => 4,
       "ltc_btc" => 5, 
       "ltc_usd" => 6,
