@@ -261,7 +261,7 @@ module Btce
       end
       
       def nonce
-        Time.now.to_i
+        (Time.now.to_f * 100_000).to_i
       end
       private :nonce
 
