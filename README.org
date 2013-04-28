@@ -4,6 +4,8 @@ This is a library in Ruby to easily acces the data provided by the [[http://btc-
 It was originally being used on [[http://btc-charts.com][BTC-Charts.com]], among other places.
 It is available under a BSD-style license.
 
+Show us some love! [[bitcoin:1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw][1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw]]
+
 ** Installation
 
 The library is available as a rubygem.
