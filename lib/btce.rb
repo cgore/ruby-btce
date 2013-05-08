@@ -176,6 +176,26 @@ module Btce
           json["ticker"]["#{method}"] if json["ticker"] and json["ticker"].is_a? Hash
         end
       }
+
+      def bid
+        buy
+      end
+
+      def offer
+        sell
+      end
+
+      def ask
+        sell
+      end
+
+      def spread
+        (offer - bid) / offer
+      end
+
+      def spread_percent
+        spread * 100.0
+      end
     end
 
     alias :average :avg
