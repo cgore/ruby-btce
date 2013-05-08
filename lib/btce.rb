@@ -176,31 +176,22 @@ module Btce
           json["ticker"]["#{method}"] if json["ticker"] and json["ticker"].is_a? Hash
         end
       }
-
-      def bid
-        buy
-      end
-
-      def offer
-        sell
-      end
-
-      def ask
-        sell
-      end
-
-      def spread
-        (offer - bid) / offer
-      end
-
-      def spread_percent
-        spread * 100.0
-      end
     end
 
-    alias :average :avg
-    alias :volume :vol
-    alias :volume_current :vol_cur
+    alias_method :bid, :buy
+    alias_method :offer, :sell
+    alias_method :ask, :sell
+    alias_method :average, :avg
+    alias_method :volume, :vol
+    alias_method :volume_current, :vol_cur
+
+    def spread
+      (offer - bid) / offer
+    end
+
+    def spread_percent
+      spread * 100.0
+    end
   end
 
   class Trade
