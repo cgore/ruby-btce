@@ -145,23 +145,23 @@ This indicates how many digits past the decimal place are commonly displayed to 
 ** =Trades= Class
 
 ** =Depth= Class
-
 ** =TradeAPI= Class
-
+This class wraps the Trade API calls for BTCE. Parameters are passed to the method as a hashmap. More information on parameters can be found on the API docs here https://btc-e.com/api/documentation
 *** Class Methods
 
 **** =sign=
-
+This method is used to sign the request with the user's private API key from btc-e.com.
 **** =trade_api_call=
-
+This is the generic method call to the Trade API. It takes a method from the Trade API, and extra information that is needed for the specific method.
 **** =get_info=
-
+Returns the user's balance, API privileges associated with the current key, number of transactions and open orders, as well as server time
 **** =trade_history=
-
+Returns the user's trade history
 **** =trans_history=
-
+Returns the user's transaction history		 
 **** =trade=
-
+Initiates a trade on the user's account
 **** =order_list=
-
+Returns a list of active orders		 
 **** =cancel_order=
+Cancels the user's order
