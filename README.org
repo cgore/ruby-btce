@@ -1,36 +1,89 @@
-* Btce Module
+* =Btce= Module
 
-** API Class
+This is a library in Ruby to easily acces the data provided by the [[http://btc-e.com][btc-e.com]] API.
+It was originally being used on [[http://btc-charts.com][BTC-Charts.com]], among other places.
+It is available under a BSD-style license.
 
-*** BTCE_DOMAIN
+Show us some love! [[bitcoin:1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw][1Lq87gJFDYT5MbCa1rA4LLzttYE9Fw3oQw]]
 
-*** CURRENCIES
+** Installation
 
-*** CURRENCY_PAIRS
+The library is available as a rubygem.
 
-*** MAX_DIGITS
+#+BEGIN_SRC sh
+gem install btce
+#+END_SRC
+
+** Basic Usage
+
+Populate the file =btce-api-key.yml= along the same lines as the example.
+
+The only thing that 99% of the people using the library will want to do with it:
+
+#+BEGIN_SRC ruby
+require 'btce'
+ticker = Btce::Ticker.new "btc_usd"
+#+END_SRC
+
+This should return something resembling:
+
+#+BEGIN_SRC ruby
+#<Btce::Ticker:0x00000000d5d9a0 @operation="ticker",
+                                @pair="btc_usd",
+                                @json={"ticker"=>{"high"=>127,
+                                                  "low"=>87.301,
+                                                  "avg"=>107.1505,
+                                                  "vol"=>4240695.81634,
+                                                  "vol_cur"=>39298.55663,
+                                                  "last"=>115,
+                                                  "buy"=>115,
+                                                  "sell"=>114.499,
+                                                  "server_time"=>1366406293}}>
+#+END_SRC
+
+You can then acces the fields with the predefined methods of the =Ticker= class.
+
+** =API= Class
+
+This is the parent class for both the =PublicAPI= class and the =TradeAPI= class.
+
+*** =BTCE_DOMAIN=
+
+This is the domain of the server, defaulting to the string =btc-e.com=.
+
+*** =CURRENCIES=
+
+This is a list of the short strings for all of the currencies currently supported on [[http://btc-e.com][btc-e.com]].
+
+*** =CURRENCY_PAIRS=
+
+This is a list of all of the supported currency pairs on [[http://btc-e.com][btc-e.com]].
+
+*** =MAX_DIGITS=
+
+This indicates how many digits past the decimal place are commonly displayed to humans for a given currency pair.
 
 *** Class Methods
 
-**** get_https
+**** =get_https=
 
-**** get_json
+**** =get_json=
 
-** PublicAPI Class
+** =PublicAPI= Class
 
-*** OPERATIONS
+*** =OPERATIONS=
 
 *** Class Methods
 
-**** get_pair_operation_json(pair, operation)
+**** =get_pair_operation_json=
 
-**** get_pair_fee_json(pair)
+**** =get_pair_fee_json=
 
-**** get_pair_ticker_json(pair)
+**** =get_pair_ticker_json=
 
-**** get_pair_trades_json(pair)
+**** =get_pair_trades_json=
 
-**** get_pair_depth_json(pair)
+**** =get_pair_depth_json=
 
 **** get_<PAIR>_fee_json
 
@@ -41,74 +94,74 @@
 **** get_<PAIR>_depth_json
 
 
-** PublicOperation Class
+** =PublicOperation= Class
 
-** Fee Class
-
-*** Instance Methods
-
-**** trade
-
-** Ticker Class
+** =Fee= Class
 
 *** Instance Methods
 
-**** high
+**** =trade=
 
-**** low
-
-**** avg
-
-**** vol
-
-**** vol_cur
-
-**** last
-
-**** buy
-
-**** sell
-
-**** server_time
-
-** Trade Class
+** =Ticker= Class
 
 *** Instance Methods
 
-**** date
+**** =high=
 
-**** price
+**** =low=
 
-**** amount
+**** =avg=, =average=
 
-**** tid
+**** =vol=, =volume=
 
-**** price_currency
+**** =vol_cur=
 
-**** item
+**** =last=
 
-**** trade_type
+**** =buy=
 
-** Trades Class
+**** =sell=
 
-** Depth Class
+**** =server_time=
 
-** TradeAPI Class
+** =Trade= Class
+
+*** Instance Methods
+
+**** =date=
+
+**** =price=
+
+**** =amount=
+
+**** =tid=
+
+**** =price_currency=
+
+**** =item=
+
+**** =trade_type=
+
+** =Trades= Class
+
+** =Depth= Class
+
+** =TradeAPI= Class
 
 *** Class Methods
 
-**** sign(params)
+**** =sign=
 
-**** trade_api_call(method, extra)
+**** =trade_api_call=
 
-**** get_info
+**** =get_info=
 
-**** trade_history
+**** =trade_history=
 
-**** trans_history
+**** =trans_history=
 
-**** trade
+**** =trade=
 
-**** order_list
+**** =order_list=
 
-**** cancel_order
+**** =cancel_order=

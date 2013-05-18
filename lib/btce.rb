@@ -49,8 +49,13 @@ module Btce
                      ltc
                      nmc
                      eur
-                     nvc)
+                     nvc
+                     trc
+                     ppc
+                     fnc
+                     cnc)
     CURRENCY_PAIRS = %w(btc_usd
+                        btc_eur
                         btc_rur
                         ltc_btc
                         ltc_usd
@@ -58,9 +63,14 @@ module Btce
                         nmc_btc
                         usd_rur
                         eur_usd
-                        nvc_btc)
+                        nvc_btc
+                        trc_btc
+                        ppc_btc
+                        ftc_btc
+                        cnc_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
+      "btc_eur" => 3,
       "btc_rur" => 4,
       "ltc_btc" => 5, 
       "ltc_usd" => 6,
@@ -68,7 +78,11 @@ module Btce
       "nmc_btc" => 4,
       "usd_rur" => 4,
       "eur_usd" => 4, 
-      "nvc_btc" => 4
+      "nvc_btc" => 4,
+      "trc_btc" => 4,
+      "ppc_btc" => 4,
+      "ftc_btc" => 4,
+      "cnc_btc" => 4
     }
 
     KEY = YAML::load File.open './btce-api-key.yml'   
@@ -172,9 +186,20 @@ module Btce
       }
     end
 
-    alias :average :avg
-    alias :volume :vol
-    alias :volume_current :vol_cur
+    alias_method :bid, :buy
+    alias_method :offer, :sell
+    alias_method :ask, :sell
+    alias_method :average, :avg
+    alias_method :volume, :vol
+    alias_method :volume_current, :vol_cur
+
+    def spread
+      (offer - bid) / offer
+    end
+
+    def spread_percent
+      spread * 100.0
+    end
   end
 
   class Trade
@@ -257,7 +282,10 @@ module Btce
       end
       
       def nonce
-        Time.now.to_i
+        while result = Time.now.to_i and @last_nonce and @last_nonce >= result
+          sleep 1
+        end
+        return @last_nonce = result
       end
       #good idea
       private :nonce
