@@ -52,8 +52,7 @@ module Btce
                      nvc
                      trc
                      ppc
-                     fnc
-                     cnc)
+                     fnc)
     CURRENCY_PAIRS = %w(btc_usd
                         btc_eur
                         btc_rur
@@ -66,8 +65,7 @@ module Btce
                         nvc_btc
                         trc_btc
                         ppc_btc
-                        ftc_btc
-                        cnc_btc)
+                        ftc_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_eur" => 3,
@@ -81,8 +79,7 @@ module Btce
       "nvc_btc" => 4,
       "trc_btc" => 4,
       "ppc_btc" => 4,
-      "ftc_btc" => 4,
-      "cnc_btc" => 4
+      "ftc_btc" => 4
     }
     KEY = YAML::load File.open 'btce-api-key.yml'    
 
