@@ -2,7 +2,7 @@
 # Soli Deo Gloria,
 # All rights reserved.
 #
-# 8729 Lower Marine Road, Saint Jacob, Illinois 62281 USA.
+# 2317 South River Road, Saint Charles, Missouri 63303 USA.
 # Web: http://cgore.com
 # Email: cgore@cgore.com
 #
@@ -50,7 +50,6 @@ module Btce
                      nmc
                      eur
                      nvc
-                     trc
                      ppc
                      fnc)
     CURRENCY_PAIRS = %w(btc_usd
@@ -63,25 +62,23 @@ module Btce
                         usd_rur
                         eur_usd
                         nvc_btc
-                        trc_btc
                         ppc_btc
                         ftc_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_eur" => 3,
       "btc_rur" => 4,
-      "ltc_btc" => 5, 
+      "ltc_btc" => 5,
       "ltc_usd" => 6,
       "ltc_rur" => 4,
       "nmc_btc" => 4,
       "usd_rur" => 4,
-      "eur_usd" => 4, 
+      "eur_usd" => 4,
       "nvc_btc" => 4,
-      "trc_btc" => 4,
       "ppc_btc" => 4,
       "ftc_btc" => 4
     }
-    KEY = YAML::load File.open 'btce-api-key.yml'    
+    KEY = YAML::load File.open 'btce-api-key.yml'
 
     class << self
       def get_https(url, params = nil, sign = nil)
@@ -199,7 +196,7 @@ module Btce
 
   class Trade
     attr_accessor :json
-    
+
     JSON_METHODS = %w(date price amount tid price_currency item trade_type)
 
     attr_accessor *JSON_METHODS.map(&:to_sym)
@@ -251,7 +248,7 @@ module Btce
                     OrderList
                     Trade
                     CancelOrder)
- 
+
     class << self
       def sign(params)
         # The digest needs to be created.
@@ -262,7 +259,7 @@ module Btce
           .join('&')
         signed = hmac.update params
       end
-      
+
       def trade_api_call(method, extra)
         params = {"method" => method, "nonce" => nonce}
         if ! extra.empty?
@@ -273,7 +270,7 @@ module Btce
         signed = sign params
         get_json "https://#{API::BTCE_DOMAIN}/tapi", params, signed
       end
-      
+
       def nonce
         while result = Time.now.to_i and @last_nonce and @last_nonce >= result
           sleep 1

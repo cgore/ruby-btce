@@ -2,7 +2,7 @@
 # Soli Deo Gloria,
 # All rights reserved.
 #
-# 8729 Lower Marine Road, Saint Jacob, Illinois 62281 USA.
+# 2317 South River Road, Saint Charles, Missouri 63303 USA.
 # Web: http://cgore.com
 # Email: cgore@cgore.com
 #
@@ -34,8 +34,8 @@
 
 Gem::Specification.new do |s|
   s.name = 'btce'
-  s.version = '0.1.9'
-  s.date = '2013-07-22'
+  s.version = '0.1.10'
+  s.date = '2013-11-14'
   s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
   s.description = "A simple library to interface with the API for btc-e.com in Ruby."
   s.authors = ['Christopher Mark Gore']
