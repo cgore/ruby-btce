@@ -59,11 +59,16 @@ module Btce
                         ltc_usd
                         ltc_rur
                         nmc_btc
+                        nmc_usd
                         usd_rur
                         eur_usd
                         nvc_btc
+                        nvc_usd
                         ppc_btc
-                        ftc_btc)
+                        ftc_btc
+                        trc_btc
+                        ppc_btc
+                        xpm_btc)
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_eur" => 3,
