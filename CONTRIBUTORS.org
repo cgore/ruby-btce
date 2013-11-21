@@ -17,6 +17,10 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[mailto:cgore@cgore.com][cgore@cgore.com]]
 
++ Sami Laine
+
+  [[https://github.com/samilaine][github.com/samilaine]]
+
 + Jamie Quint
 
   [[http://jamiequint.com][jamiequint.com]]

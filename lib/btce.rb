@@ -43,15 +43,6 @@ require 'yaml'
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
-    CURRENCIES =  %w(btc
-                     usd
-                     rur
-                     ltc
-                     nmc
-                     eur
-                     nvc
-                     ppc
-                     fnc)
     CURRENCY_PAIRS = %w(btc_usd
                         btc_eur
                         btc_rur
@@ -69,6 +60,7 @@ module Btce
                         trc_btc
                         ppc_btc
                         xpm_btc)
+    CURRENCIES = CURRENCY_PAIRS.map {|pair| pair.split("_")}.flatten.uniq.sort
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_eur" => 3,
