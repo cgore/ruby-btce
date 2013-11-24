@@ -48,6 +48,7 @@ module Btce
                         btc_rur
                         ltc_btc
                         ltc_usd
+                        ltc_eur
                         ltc_rur
                         nmc_btc
                         nmc_usd
