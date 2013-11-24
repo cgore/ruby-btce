@@ -252,6 +252,7 @@ module Btce
                     TransHistory
                     TradeHistory
                     OrderList
+                    ActiveOrders
                     Trade
                     CancelOrder)
 
