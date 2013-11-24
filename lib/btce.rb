@@ -47,6 +47,7 @@ module Btce
                         btc_eur
                         btc_rur
                         ltc_btc
+                        ltc_eur
                         ltc_usd
                         ltc_rur
                         nmc_btc
@@ -66,6 +67,7 @@ module Btce
       "btc_eur" => 3,
       "btc_rur" => 4,
       "ltc_btc" => 5,
+      "ltc_eur" => 6,
       "ltc_usd" => 6,
       "ltc_rur" => 4,
       "nmc_btc" => 4,
