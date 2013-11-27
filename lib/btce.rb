@@ -75,30 +75,29 @@ module Btce
       "ppc_btc" => 4,
       "ftc_btc" => 4
     }
-    KEY = YAML::load File.open 'btce-api-key.yml'
 
     class << self
-      def get_https(url, params = nil, sign = nil)
-        raise ArgumentError if not url.is_a? String
-        uri = URI.parse url
+      def get_https(opts={})
+        raise ArgumentError if not opts[:url].is_a? String
+        uri = URI.parse opts[:url]
         http = Net::HTTP.new uri.host, uri.port
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        if params.nil?
+        if opts[:params].nil?
           request = Net::HTTP::Get.new uri.request_uri
         else
           # If sending params, then we want a post request for authentication.
           request = Net::HTTP::Post.new uri.request_uri
-          request.add_field "Key", API::KEY['key']
-          request.add_field "Sign", sign
-          request.set_form_data params
+          request.add_field "Key", opts[:key]
+          request.add_field "Sign", opts[:signed]
+          request.set_form_data opts[:params]
         end
         response = http.request request
         response.body
       end
 
-      def get_json(url, params = nil, sign = nil)
-        result = get_https(url, params, sign)
+      def get_json(opts={})
+        result = get_https(opts)
         if not result.is_a? String or not result.valid_json?
           raise RuntimeError, "Server returned invalid data."
         end
@@ -111,11 +110,10 @@ module Btce
     OPERATIONS = %w(fee ticker trades depth)
 
     class << self
-
       def get_pair_operation_json(pair, operation)
         raise ArgumentError if not API::CURRENCY_PAIRS.include? pair
         raise ArgumentError if not OPERATIONS.include? operation
-        get_json "https://#{API::BTCE_DOMAIN}/api/2/#{pair}/#{operation}"
+        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/2/#{pair}/#{operation}" })
       end
 
       OPERATIONS.each do |operation|
@@ -239,6 +237,16 @@ module Btce
   end
 
   class TradeAPI < API
+    if File.exists? 'btce-api-key.yml'
+      KEY = YAML::load File.open 'btce-api-key.yml'
+
+      class << self
+        def new_from_keyfile
+          new key: KEY["key"], secret: KEY["secret"]
+        end
+      end
+    end
+
     OPERATIONS = %w(getInfo
                     TransHistory
                     TradeHistory
@@ -246,43 +254,49 @@ module Btce
                     Trade
                     CancelOrder)
 
-    class << self
-      def sign(params)
-        # The digest needs to be created.
-        hmac = OpenSSL::HMAC.new(API::KEY['secret'],
-                                 OpenSSL::Digest::SHA512.new)
-        params = params
-          .collect {|k,v| "#{k}=#{v}"}
-          .join('&')
-        signed = hmac.update params
-      end
 
-      def trade_api_call(method, extra)
-        params = {"method" => method, "nonce" => nonce}
-        if ! extra.empty?
-          extra.each do |k,v|
-            params[k.to_s] = v
-          end
+    def initialize(opts={})
+      raise ArgumentError unless opts.has_key?(:key) and opts.has_key?(:secret)
+      @key = opts[:key]
+      @secret = opts[:secret]
+    end
+
+    def sign(params)
+      # The digest needs to be created.
+      hmac = OpenSSL::HMAC.new(@secret,
+                               OpenSSL::Digest::SHA512.new)
+      params = params.collect {|k,v| "#{k}=#{v}"}.join('&')
+      signed = hmac.update params
+    end
+
+    def trade_api_call(method, extra)
+      params = {"method" => method, "nonce" => nonce}
+      if ! extra.empty?
+        extra.each do |k,v|
+          params[k.to_s] = v
         end
-        signed = sign params
-        get_json "https://#{API::BTCE_DOMAIN}/tapi", params, signed
       end
+      signed = sign params
+      API::get_json({ :url => "https://#{API::BTCE_DOMAIN}/tapi",
+                      :key => @key,
+                      :params => params,
+                      :signed => signed })
+    end
 
-      def nonce
-        while result = Time.now.to_i and @last_nonce and @last_nonce >= result
-          sleep 1
+    def nonce
+      while result = Time.now.to_i and @last_nonce and @last_nonce >= result
+        sleep 1
+      end
+      return @last_nonce = result
+    end
+    private :nonce
+
+    OPERATIONS.each do |operation|
+      class_eval %{
+        def #{operation.camelcase_to_snakecase} extra={}
+          trade_api_call "#{operation}", extra
         end
-        return @last_nonce = result
-      end
-      private :nonce
-
-      OPERATIONS.each do |operation|
-        class_eval %{
-          def #{operation.camelcase_to_snakecase} extra={}
-            trade_api_call "#{operation}", extra
-          end
-        }
-      end
+      }
     end
   end
 end
