@@ -240,8 +240,10 @@ module Btce
     if File.exists? 'btce-api-key.yml'
       KEY = YAML::load File.open 'btce-api-key.yml'
 
-      def new_from_keyfile
-        new key: KEY["key"], secret: KEY["secret"]
+      class << self
+        def new_from_keyfile
+          new key: KEY["key"], secret: KEY["secret"]
+        end
       end
     end
 
