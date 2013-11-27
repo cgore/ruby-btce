@@ -38,16 +38,6 @@ require 'btce'
 include Btce
 
 describe API do
-  describe :KEY do
-    it "contains the key entry" do
-      API::KEY['key'].should be_a String
-    end
-
-    it "contains the secret entry" do
-      API::KEY['secret'].should be_a String
-    end
-  end
-
   describe :get_https
 
   describe :get_json
@@ -99,7 +89,7 @@ describe Fee do
     it "loads the json" do
       @fee.json
         .should_not be_nil
-    end    
+    end
   end
 
   describe :trade do
@@ -129,7 +119,7 @@ describe Ticker do
     it "loads the json" do
       @ticker.json
         .should_not be_nil
-    end    
+    end
   end
 
   Ticker::JSON_METHODS.each do |method|
@@ -180,6 +170,16 @@ describe Trades do
 end
 
 describe TradeAPI do
+  describe :KEY do
+    it "contains the key entry" do
+      TradeAPI::KEY['key'].should be_a String
+    end
+
+    it "contains the secret entry" do
+      TradeAPI::KEY['secret'].should be_a String
+    end
+  end
+
   describe :sign
 
   describe :trade_api_call

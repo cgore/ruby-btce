@@ -237,6 +237,14 @@ module Btce
   end
 
   class TradeAPI < API
+    if File.exists? 'btce-api-key.yml'
+      KEY = YAML::load File.open 'btce-api-key.yml'
+
+      def new_from_keyfile
+        new key: KEY["key"], secret: KEY["secret"]
+      end
+    end
+
     OPERATIONS = %w(getInfo
                     TransHistory
                     TradeHistory
