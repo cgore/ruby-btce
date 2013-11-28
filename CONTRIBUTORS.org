@@ -28,3 +28,11 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
   [[https://github.com/jamiequint][github.com/jamiequint]]
 
   [[mailto:jamiequint@gmail.com][jamiequint@gmail.com]]
+
+* Michaël Witrant
+
+  [[http://michael.witrant.com/][michael.witrant.com]]
+
+  [[https://github.com/sigmike][github.com/sigmike]]
+
+  [[mailto:mike@lepton.fr][mike@lepton.fr]]
