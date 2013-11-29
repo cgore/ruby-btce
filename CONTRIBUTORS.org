@@ -3,6 +3,14 @@
 Thanks to everyone who has helped out with this project.  If we have forgotten
 to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgore.com]].
 
++ Christoph Bünte
+
+  [[http://www.christophbuente.de][www.christophbuente.de]]
+
+  [[https://github.com/christoph-buente][github.com/christoph-buente]]
+
+  [[mailto:info@christophbuente.de][info@christophbuente.de]]
+
 + Edward Funger
 
   [[https://github.com/teddythetwig][github.com/teddythetwig]]
@@ -29,7 +37,7 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[mailto:jamiequint@gmail.com][jamiequint@gmail.com]]
 
-* Michaël Witrant
++ Michaël Witrant
 
   [[http://michael.witrant.com/][michael.witrant.com]]
 

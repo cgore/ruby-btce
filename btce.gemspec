@@ -37,11 +37,12 @@
 
 Gem::Specification.new do |s|
   s.name = 'btce'
-  s.version = '0.2.1'
+  s.version = '0.2.2'
   s.date = '2013-11-28'
   s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
   s.description = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.authors = ['Edward Funger',
+  s.authors = ['Christoph Bünte',
+               'Edward Funger',
                'Christopher Mark Gore',
                'Sami Laine',
                'Jaime Quint',

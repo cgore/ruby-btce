@@ -46,35 +46,39 @@ module Btce
     CURRENCY_PAIRS = %w(btc_usd
                         btc_eur
                         btc_rur
+                        eur_usd
+                        ftc_btc
                         ltc_btc
-                        ltc_usd
                         ltc_eur
                         ltc_rur
+                        ltc_usd
                         nmc_btc
                         nmc_usd
-                        usd_rur
-                        eur_usd
                         nvc_btc
                         nvc_usd
                         ppc_btc
-                        ftc_btc
                         trc_btc
-                        ppc_btc
+                        usd_rur
                         xpm_btc)
     CURRENCIES = CURRENCY_PAIRS.map {|pair| pair.split("_")}.flatten.uniq.sort
     MAX_DIGITS = {
       "btc_usd" => 3,
       "btc_eur" => 3,
       "btc_rur" => 4,
-      "ltc_btc" => 5,
-      "ltc_usd" => 6,
-      "ltc_rur" => 4,
-      "nmc_btc" => 4,
-      "usd_rur" => 4,
       "eur_usd" => 4,
+      "ftc_btc" => 4,
+      "ltc_btc" => 5,
+      "ltc_eur" => 6,
+      "ltc_rur" => 4,
+      "ltc_usd" => 6,
+      "nmc_btc" => 4,
+      "nmc_usd" => 6,
       "nvc_btc" => 4,
+      "nvc_usd" => 4,
       "ppc_btc" => 4,
-      "ftc_btc" => 4
+      "trc_btc" => 6,
+      "usd_rur" => 4,
+      "xpm_btc" => 6
     }
 
     class << self
