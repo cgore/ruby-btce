@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
                'Jaime Quint',
                'Michaël Witrant']
   s.email = 'cgore@cgore.com'
-  s.files = ['lib/btce.rb']
+  s.files = `git ls-files`.split($/)
   s.homepage = 'https://github.com/cgore/ruby-btce'
   s.add_dependency 'monkey-patch'
 end
