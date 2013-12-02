@@ -146,8 +146,44 @@ This indicates how many digits past the decimal place are commonly displayed to 
 
 ** =Depth= Class
 ** =TradeAPI= Class
+
 This class wraps the Trade API calls for BTCE. Parameters are passed to the method as a hashmap. More information on parameters can be found on the API docs here https://btc-e.com/api/documentation
+
+*** Basic Usage
+
+#+BEGIN_SRC ruby
+require 'btce'
+info = Btce::TradeAPI.new_from_keyfile.get_info
+#+END_SRC
+
+This should return something resembling:
+
+#+BEGIN_SRC ruby
+{"success" => 1,
+ "return" => {"funds" => {"usd" => 2.57460659,
+                          "btc" => 0.00012226,
+                          "ltc" => 3.00815559,
+                          "nmc" => 0,
+                          "rur" => 8.0116908,
+                          "eur" => 0,
+                          "nvc" => 0,
+                          "trc" => 0,
+                          "ppc" => 0,
+                          "ftc" => 0,
+                          "xpm" => 0},
+              "rights" => {"info" => 1,
+                           "trade" => 0,
+                           "withdraw" => 0},
+              "transaction_count" => 120,
+              "open_orders" => 1,
+              "server_time"=>1385947487}}
+#+END_SRC
+
 *** Class Methods
+
+**** =new_from_keyfile=
+
+*** Instance Methods
 
 **** =sign=
 This method is used to sign the request with the user's private API key from btc-e.com.
