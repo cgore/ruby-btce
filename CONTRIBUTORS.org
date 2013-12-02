@@ -25,6 +25,12 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[mailto:cgore@cgore.com][cgore@cgore.com]]
 
++ Stephan Kaag
+
+  [[http://www.bettyblocks.com][www.bettyblocks.com]]
+
+  [[https://github.com/stephankaag][github.com/stephankaag]]
+
 + Sami Laine
 
   [[https://github.com/samilaine][github.com/samilaine]]
