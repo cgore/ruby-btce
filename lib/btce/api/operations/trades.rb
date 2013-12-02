@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# -*- mode: Ruby -*-
-
 # Copyright (c) 2013, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
@@ -35,21 +32,22 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-Gem::Specification.new do |s|
-  s.name = 'btce'
-  s.version = '0.2.3'
-  s.date = '2013-12-01'
-  s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.description = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.authors = ['Christoph Bünte',
-               'Edward Funger',
-               'Christopher Mark Gore',
-               'Stephan Kaag',
-               'Sami Laine',
-               'Jaime Quint',
-               'Michaël Witrant']
-  s.email = 'cgore@cgore.com'
-  s.files = `git ls-files lib/`.split($/)
-  s.homepage = 'https://github.com/cgore/ruby-btce'
-  s.add_dependency 'monkey-patch'
+module Btce
+  class Trades < PublicOperation
+    attr_reader :all
+
+    def initialize(pair)
+      super 'trades', pair
+      load_trades
+    end
+
+    def load_trades
+      @all = json.map {|trade| Trade.new_from_json trade} if json.is_a? Array
+    end
+    private :load_trades
+
+    def [] *rest
+      all[*rest]
+    end
+  end
 end

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# -*- mode: Ruby -*-
-
 # Copyright (c) 2013, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
@@ -35,21 +32,32 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-Gem::Specification.new do |s|
-  s.name = 'btce'
-  s.version = '0.2.3'
-  s.date = '2013-12-01'
-  s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.description = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.authors = ['Christoph Bünte',
-               'Edward Funger',
-               'Christopher Mark Gore',
-               'Stephan Kaag',
-               'Sami Laine',
-               'Jaime Quint',
-               'Michaël Witrant']
-  s.email = 'cgore@cgore.com'
-  s.files = `git ls-files lib/`.split($/)
-  s.homepage = 'https://github.com/cgore/ruby-btce'
-  s.add_dependency 'monkey-patch'
+module Btce
+  class PublicAPI < API
+    OPERATIONS = %w(fee ticker trades depth)
+
+    class << self
+      def get_pair_operation_json(pair, operation)
+        raise ArgumentError if not API::CURRENCY_PAIRS.include? pair
+        raise ArgumentError if not OPERATIONS.include? operation
+        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/2/#{pair}/#{operation}" })
+      end
+
+      OPERATIONS.each do |operation|
+        class_eval %{
+          def get_pair_#{operation}_json(pair)
+            get_pair_operation_json pair, "#{operation}"
+          end
+        }
+
+        API::CURRENCY_PAIRS.each do |pair|
+          class_eval %{
+            def get_#{pair}_#{operation}_json
+              get_pair_#{operation}_json "#{pair}"
+            end
+          }
+        end
+      end
+    end
+  end
 end
