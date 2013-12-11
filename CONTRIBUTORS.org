@@ -11,6 +11,12 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[mailto:info@christophbuente.de][info@christophbuente.de]]
 
++ Davide Di Cillo
+
+  [[https://github.com/davidedicillo][github.com/davidedicillo]]
+
+  [[http://davidedicillo.com][davidedicillo.com]]
+
 + Edward Funger
 
   [[https://github.com/teddythetwig][github.com/teddythetwig]]
