@@ -49,6 +49,7 @@ module Btce
                         nvc_btc
                         nvc_usd
                         ppc_btc
+                        ppc_usd
                         trc_btc
                         usd_rur
                         xpm_btc)
@@ -68,6 +69,7 @@ module Btce
       "nvc_btc" => 4,
       "nvc_usd" => 4,
       "ppc_btc" => 4,
+      "ppc_usd" => 4,
       "trc_btc" => 6,
       "usd_rur" => 4,
       "xpm_btc" => 6
