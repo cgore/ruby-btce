@@ -38,9 +38,14 @@ module Btce
 
     class << self
       def get_pair_operation_json(pair, operation)
-        raise ArgumentError if not API::CURRENCY_PAIRS.include? pair
+	list = pair.split('-')
+	i = 0
+        begin
+          raise ArgumentError if not API::CURRENCY_PAIRS.include? list[i]
+	  i = i + 1
+	end while i < list.length
         raise ArgumentError if not OPERATIONS.include? operation
-        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/2/#{pair}/#{operation}" })
+        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}" })
       end
 
       OPERATIONS.each do |operation|
