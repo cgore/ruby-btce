@@ -39,7 +39,7 @@ module Btce
     end
 
     def trade
-      json["trade"]
+      json[pair]
     end
   end
 end
