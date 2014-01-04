@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Christopher Mark Gore,
+# Copyright (c) 2013-2014, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
@@ -50,8 +50,12 @@ module Btce
 
     alias_method :bid, :buy
     alias_method :offer, :sell
+
     alias_method :ask, :sell
     alias_method :average, :avg
+
+    alias_method :server_time, :updated
+
     alias_method :volume, :vol
     alias_method :volume_current, :vol_cur
 
