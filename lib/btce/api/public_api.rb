@@ -37,7 +37,7 @@ module Btce
     OPERATIONS = %w(fee ticker trades depth)
 
     class << self
-      def get_pair_operation_json(pair, operation)
+      def get_pair_operation_json(pair, operation, options={})
 	list = pair.split('-')
 	i = 0
         begin
@@ -45,7 +45,13 @@ module Btce
 	  i = i + 1
 	end while i < list.length
         raise ArgumentError if not OPERATIONS.include? operation
-        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}" })
+        
+        params = ""
+        if options[:limit].is_a? Numeric
+          params = "?limit=#{options[:limit]}"
+        end
+        
+        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}" })
       end
 
       OPERATIONS.each do |operation|
