@@ -1,24 +1,26 @@
-# Copyright (c) 2013, Christopher Mark Gore,
+# -*- coding: utf-8 -*-
+
+# Copyright © 2013-2014, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
-# 8729 Lower Marine Road, Saint Jacob, Illinois 62281 USA.
+# 2317 South River Road, Saint Charles, Missouri 63303 USA.
 # Web: http://cgore.com
 # Email: cgore@cgore.com
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
-# * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
+#   * Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
 #
-# * Redistributions in binary form must reproduce the above copyright
-# notice, this list of conditions and the following disclaimer in the
-# documentation and/or other materials provided with the distribution.
+#   * Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
 #
-# * Neither the name of Christopher Mark Gore nor the names of other
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
+#   * Neither the name of Christopher Mark Gore nor the names of other
+#     contributors may be used to endorse or promote products derived from
+#     this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -45,6 +47,31 @@ end
 
 describe PublicAPI do
   describe :get_pair_operation_json
+
+  describe :get_btc_usd_trades_json do
+    it "returns the json for BTC/USD trades" do
+      @json = PublicAPI.get_btc_usd_trades_json
+      @json.should be_a Hash
+      @json.keys.should == ["btc_usd"]
+      @json["btc_usd"].should be_an Array
+    end
+
+    it "defaults to a length limit of 150" do
+      PublicAPI.get_btc_usd_trades_json["btc_usd"].length.should <= 150
+    end
+
+    it "allows for an optional length limit specifier" do
+      PublicAPI.get_btc_usd_trades_json(limit: 50)["btc_usd"].length.should <= 50
+    end
+
+    it "raises an ArgumentError for non-integer limits" do
+      expect {PublicAPI.get_btc_usd_trades_json(limit: "fifty")}.to raise_error ArgumentError
+    end
+
+    it "raises an ArgumentError for limits < 1" do
+      expect {PublicAPI.get_btc_usd_trades_json(limit: 0)}.to raise_error ArgumentError
+    end
+  end
 end
 
 describe PublicOperation do

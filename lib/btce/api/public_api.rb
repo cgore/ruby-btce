@@ -1,4 +1,6 @@
-# Copyright (c) 2013, Christopher Mark Gore,
+# -*- coding: utf-8 -*-
+
+# Copyright © 2013-2014, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
@@ -9,16 +11,16 @@
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
-# * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
+#   * Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
 #
-# * Redistributions in binary form must reproduce the above copyright
-# notice, this list of conditions and the following disclaimer in the
-# documentation and/or other materials provided with the distribution.
+#   * Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
 #
-# * Neither the name of Christopher Mark Gore nor the names of other
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
+#   * Neither the name of Christopher Mark Gore nor the names of other
+#     contributors may be used to endorse or promote products derived from
+#     this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -38,33 +40,42 @@ module Btce
 
     class << self
       def get_pair_operation_json(pair, operation, options={})
-	list = pair.split('-')
-	i = 0
+        list = pair.split('-')
+        i = 0
         begin
           raise ArgumentError if not API::CURRENCY_PAIRS.include? list[i]
-	  i = i + 1
-	end while i < list.length
+          i = i + 1
+        end while i < list.length
         raise ArgumentError if not OPERATIONS.include? operation
-        
+
         params = ""
-        if options[:limit].is_a? Numeric
-          params = "?limit=#{options[:limit]}"
+        if options[:limit]
+          if options[:limit].is_a? Integer
+            if options[:limit] < 1
+              raise ArgumentError, "Limit #{options[:limit]} < 1."
+            else
+              params = "?limit=#{options[:limit]}"
+            end
+          else
+            raise ArgumentError,
+              "Non-Integer limit #{options[:limit].inspect}."
+          end
         end
-        
-        get_json({ :url => "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}" })
+
+        get_json url: "https://#{API::BTCE_DOMAIN}/api/3/#{operation}/#{pair}#{params}"
       end
 
       OPERATIONS.each do |operation|
         class_eval %{
-          def get_pair_#{operation}_json(pair)
-            get_pair_operation_json pair, "#{operation}"
+          def get_pair_#{operation}_json(pair, options={})
+            get_pair_operation_json pair, "#{operation}", options
           end
         }
 
         API::CURRENCY_PAIRS.each do |pair|
           class_eval %{
-            def get_#{pair}_#{operation}_json
-              get_pair_#{operation}_json "#{pair}"
+            def get_#{pair}_#{operation}_json(options={})
+              get_pair_#{operation}_json "#{pair}", options
             end
           }
         end
