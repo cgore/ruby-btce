@@ -53,6 +53,10 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[mailto:jamiequint@gmail.com][jamiequint@gmail.com]]
 
++ Panupan Sriautharawong
+
+  [[https://github.com/panupan][github.com/panupan]]
+
 + Michaël Witrant
 
   [[http://michael.witrant.com/][michael.witrant.com]]
