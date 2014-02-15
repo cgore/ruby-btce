@@ -36,16 +36,17 @@
 
 module Btce
   class PublicOperation
-    attr_reader :json, :operation, :pair
+    attr_reader :json, :operation, :pair, :options
 
-    def initialize(operation, pair)
+    def initialize(operation, pair, options = {})
       @operation = operation
       @pair = pair
+      @options = options
       load_json
     end
 
     def load_json
-      @json = PublicAPI.get_pair_operation_json pair, operation
+      @json = PublicAPI.get_pair_operation_json pair, operation, options
     end
   end
 end
