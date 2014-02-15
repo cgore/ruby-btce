@@ -38,8 +38,8 @@ module Btce
   class Trades < PublicOperation
     attr_reader :all
 
-    def initialize(pair)
-      super 'trades', pair
+    def initialize(pair, options={})
+      super 'trades', pair, options
       load_trades
     end
 
