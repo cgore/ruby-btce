@@ -45,6 +45,10 @@ to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgor
 
   [[https://github.com/selvam1991][github.com/selvam1991]]
 
++ Kevin Pheasey
+
+  [[https://github.com/kpheasey][github.com/kpheasey]]
+
 + Jamie Quint
 
   [[http://jamiequint.com][jamiequint.com]]
