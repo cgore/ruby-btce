@@ -201,3 +201,17 @@ Initiates a trade on the user's account
 Returns a list of active orders		 
 **** =cancel_order=
 Cancels the user's order
+
+** Commonly Encountered Errors
+
+*** Querying the endpoint more than once a second.
+
+You can only query BTC-e's endpoint at most once a second currently.
+If you see something similar to the following error, that is probably what you are encountering.
+
+
+#+BEGIN_SRC
+Same nonce is sent for every request.
+
+{"success"=>0, "error"=>"invalid nonce parameter; on key:1409032186, you sent:1409032186, you should send:1409032187"}
+#+END_SRC
