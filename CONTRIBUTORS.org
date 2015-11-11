@@ -3,6 +3,10 @@
 Thanks to everyone who has helped out with this project.  If we have forgotten
 to add you to this list, please email me at [[mailto:cgore@cgore.com][cgore@cgore.com]].
 
++ Auston Bunsen
+
+  [[https://github.com/abunsen][github.com/abunsen]]
+
 + Christoph Bünte
 
   [[http://www.christophbuente.de][www.christophbuente.de]]
