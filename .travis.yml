@@ -1,1 +1,3 @@
 language: ruby
+script: rspec
+sudo: false
