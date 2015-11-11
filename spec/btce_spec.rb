@@ -197,15 +197,7 @@ describe Trades do
 end
 
 describe TradeAPI do
-  describe :KEY do
-    it "contains the key entry" do
-      TradeAPI::KEY['key'].should be_a String
-    end
-
-    it "contains the secret entry" do
-      TradeAPI::KEY['secret'].should be_a String
-    end
-  end
+  describe :KEY
 
   describe :sign
 
