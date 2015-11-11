@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # -*- mode: Ruby -*-
 
-# Copyright © 2013-2014, Christopher Mark Gore,
+# Copyright © 2013-2015, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
@@ -37,11 +37,12 @@
 
 Gem::Specification.new do |s|
   s.name = 'btce'
-  s.version = '0.5.1'
-  s.date = '2014-03-09'
+  s.version = '0.5.2'
+  s.date = '2015-11-11'
   s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
   s.description = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.authors = ['Christoph Bünte',
+  s.authors = ['Auston Bunsen',
+               'Christoph Bünte',
                'Davide Di Cillo',
                'Edward Funger',
                'Christopher Mark Gore',
