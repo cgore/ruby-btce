@@ -37,12 +37,16 @@
 module Btce
   class API
     BTCE_DOMAIN = "btc-e.com"
-    CURRENCY_PAIRS = %w(btc_usd
-                        btc_eur
+    CURRENCY_PAIRS = %w(btc_eur
                         btc_rur
-                        eur_usd
+                        btc_usd
+                        dsh_btc
+                        eth_btc
+                        eth_ltc
+                        eth_rur
+                        eth_usd
                         eur_rur
-                        ftc_btc
+                        eur_usd
                         ltc_btc
                         ltc_eur
                         ltc_rur
@@ -53,30 +57,30 @@ module Btce
                         nvc_usd
                         ppc_btc
                         ppc_usd
-                        trc_btc
-                        usd_rur
-                        xpm_btc)
+                        usd_rur)
     CURRENCIES = CURRENCY_PAIRS.map {|pair| pair.split("_")}.flatten.uniq.sort
     MAX_DIGITS = {
-      "btc_usd" => 3,
-      "btc_eur" => 3,
-      "btc_rur" => 4,
-      "eur_usd" => 4,
-      "eur_rur" => 4,
-      "ftc_btc" => 4,
-      "ltc_btc" => 5,
-      "ltc_eur" => 6,
-      "ltc_rur" => 4,
-      "ltc_usd" => 6,
-      "nmc_btc" => 4,
-      "nmc_usd" => 6,
-      "nvc_btc" => 4,
-      "nvc_usd" => 4,
-      "ppc_btc" => 4,
-      "ppc_usd" => 4,
-      "trc_btc" => 6,
-      "usd_rur" => 4,
-      "xpm_btc" => 6
+      'btc_eur' => 5,
+      'btc_rur' => 5,
+      'btc_usd' => 3,
+      'dsh_btc' => 5,
+      'eth_btc' => 5,
+      'eth_ltc' => 5,
+      'eth_rur' => 5,
+      'eth_usd' => 5,
+      'eur_rur' => 5,
+      'eur_usd' => 5,
+      'ltc_btc' => 5,
+      'ltc_eur' => 3,
+      'ltc_rur' => 5,
+      'ltc_usd' => 6,
+      'nmc_btc' => 5,
+      'nmc_usd' => 3,
+      'nvc_btc' => 5,
+      'nvc_usd' => 3,
+      'ppc_btc' => 5,
+      'ppc_usd' => 3,
+      'usd_rur' => 5
     }
 
     class << self
