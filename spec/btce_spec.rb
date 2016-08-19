@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright © 2013-2014, Christopher Mark Gore,
+# Copyright © 2013-2016, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
@@ -122,7 +122,7 @@ describe Fee do
   describe :trade do
     it "returns the fee for a trade" do
       @fee.trade
-        .should be_a Float
+        .should be_a Numeric
     end
   end
 end
