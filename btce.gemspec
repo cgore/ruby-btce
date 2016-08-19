@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # -*- mode: Ruby -*-
 
-# Copyright © 2013-2015, Christopher Mark Gore,
+# Copyright © 2013-2016, Christopher Mark Gore,
 # Soli Deo Gloria,
 # All rights reserved.
 #
@@ -37,8 +37,8 @@
 
 Gem::Specification.new do |s|
   s.name = 'btce'
-  s.version = '0.5.2'
-  s.date = '2015-11-11'
+  s.version = '0.5.3'
+  s.date = '2016-08-18'
   s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
   s.description = "A simple library to interface with the API for btc-e.com in Ruby."
   s.authors = ['Auston Bunsen',
@@ -56,5 +56,5 @@ Gem::Specification.new do |s|
   s.email = 'cgore@cgore.com'
   s.files = `git ls-files lib/`.split($/)
   s.homepage = 'https://github.com/cgore/ruby-btce'
-  s.add_dependency 'monkey-patch'
+  s.add_dependency 'monkey-patch', "~> 0.1.0"
 end
