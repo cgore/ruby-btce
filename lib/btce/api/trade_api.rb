@@ -36,8 +36,8 @@
 
 module Btce
   class TradeAPI < API
-    if File.exists? 'btce-api-key.yml'
-      KEY = YAML::load File.open 'btce-api-key.yml'
+    if File.exists? 'wex-api-key.yml'
+      KEY = YAML::load File.open 'wex-api-key.yml'
 
       class << self
         def new_from_keyfile

@@ -1,6 +1,6 @@
 * =Btce= Module
 
-This is a library in Ruby to easily acces the data provided by the [[http://btc-e.com][btc-e.com]] API.
+This is a library in Ruby to easily acces the data provided by the [[http://wex.nz][wex.nz]] API.
 It was originally being used on [[http://btc-charts.com][BTC-Charts.com]], among other places.
 It is available under a BSD-style license.
 
@@ -16,7 +16,7 @@ gem install btce
 
 ** Basic Usage
 
-Populate the file =btce-api-key.yml= along the same lines as the example.
+Populate the file =wex-api-key.yml= along the same lines as the example.
 
 The only thing that 99% of the people using the library will want to do with it:
 
@@ -49,15 +49,15 @@ This is the parent class for both the =PublicAPI= class and the =TradeAPI= class
 
 *** =BTCE_DOMAIN=
 
-This is the domain of the server, defaulting to the string =btc-e.com=.
+This is the domain of the server, defaulting to the string =wex.nz=.
 
 *** =CURRENCIES=
 
-This is a list of the short strings for all of the currencies currently supported on [[http://btc-e.com][btc-e.com]].
+This is a list of the short strings for all of the currencies currently supported on [[http://wex.nz][wex.nz]].
 
 *** =CURRENCY_PAIRS=
 
-This is a list of all of the supported currency pairs on [[http://btc-e.com][btc-e.com]].
+This is a list of all of the supported currency pairs on [[http://wex.nz][wex.nz]].
 
 *** =MAX_DIGITS=
 
@@ -147,7 +147,7 @@ This indicates how many digits past the decimal place are commonly displayed to 
 ** =Depth= Class
 ** =TradeAPI= Class
 
-This class wraps the Trade API calls for BTCE. Parameters are passed to the method as a hashmap. More information on parameters can be found on the API docs here https://btc-e.com/api/documentation
+This class wraps the Trade API calls for BTCE. Parameters are passed to the method as a hashmap. More information on parameters can be found on the API docs here https://wex.nz/api/documentation
 
 *** Basic Usage
 
@@ -186,7 +186,7 @@ This should return something resembling:
 *** Instance Methods
 
 **** =sign=
-This method is used to sign the request with the user's private API key from btc-e.com.
+This method is used to sign the request with the user's private API key from wex.nz.
 **** =trade_api_call=
 This is the generic method call to the Trade API. It takes a method from the Trade API, and extra information that is needed for the specific method.
 **** =get_info=
@@ -194,11 +194,11 @@ Returns the user's balance, API privileges associated with the current key, numb
 **** =trade_history=
 Returns the user's trade history
 **** =trans_history=
-Returns the user's transaction history		 
+Returns the user's transaction history
 **** =trade=
 Initiates a trade on the user's account
 **** =order_list=
-Returns a list of active orders		 
+Returns a list of active orders
 **** =cancel_order=
 Cancels the user's order
 

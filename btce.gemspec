@@ -37,10 +37,10 @@
 
 Gem::Specification.new do |s|
   s.name = 'btce'
-  s.version = '0.5.5'
-  s.date = '2016-08-18'
-  s.summary = "A simple library to interface with the API for btc-e.com in Ruby."
-  s.description = "A simple library to interface with the API for btc-e.com in Ruby."
+  s.version = '0.6.0'
+  s.date = '2017-09-16'
+  s.summary = "A simple library to interface with the API for wex.nz in Ruby."
+  s.description = "A simple library to interface with the API for wex.nz in Ruby."
   s.authors = ['Auston Bunsen',
                'Christoph Bünte',
                'Charley David',
@@ -53,7 +53,8 @@ Gem::Specification.new do |s|
                'Kevin Pheasey',
                'Jaime Quint',
                'Panupan Sriautharawong',
-               'Michaël Witrant']
+               'Michaël Witrant',
+               'Ramón Martínez']
   s.email = 'cgore@cgore.com'
   s.files = `git ls-files lib/`.split($/)
   s.homepage = 'https://github.com/cgore/ruby-btce'
