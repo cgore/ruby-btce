@@ -36,28 +36,48 @@
 
 module Btce
   class API
-    BTCE_DOMAIN = "btc-e.com"
-    CURRENCY_PAIRS = %w(btc_eur
+    BTCE_DOMAIN = "wex.nz"
+    CURRENCY_PAIRS = %w(bch_btc
+                        bch_usd
+                        bchet_bch
+                        btc_eur
                         btc_rur
                         btc_usd
+                        btcet_btc
                         dsh_btc
+                        dsh_eth
+                        dsh_eur
+                        dsh_ltc
+                        dsh_rur
+                        dsh_usd
+                        dshet_dsh
                         eth_btc
+                        eth_eur
                         eth_ltc
                         eth_rur
                         eth_usd
+                        ethet_eth
                         eur_rur
                         eur_usd
+                        euret_eur
                         ltc_btc
                         ltc_eur
                         ltc_rur
                         ltc_usd
+                        ltcet_ltc
                         nmc_btc
                         nmc_usd
+                        nmcet_nmc
                         nvc_btc
                         nvc_usd
+                        nvcet_nvc
                         ppc_btc
                         ppc_usd
-                        usd_rur)
+                        ppcet_ppc
+                        ruret_rur
+                        usd_rur
+                        usdet_usd
+                        )
     CURRENCIES = CURRENCY_PAIRS.map {|pair| pair.split("_")}.flatten.uniq.sort
     MAX_DIGITS = {
       'btc_eur' => 5,
